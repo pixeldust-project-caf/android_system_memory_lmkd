@@ -3924,9 +3924,6 @@ static bool init_psi_monitors() {
      */
     bool use_new_strategy =
         GET_LMK_PROPERTY(bool, "use_new_strategy", low_ram_device || !use_minfree_levels);
-    if (force_use_old_strategy) {
-        use_new_strategy = false;
-    }
 
     /* In default PSI mode override stall amounts using system properties */
     if (use_new_strategy) {
@@ -4661,7 +4658,6 @@ static void update_props() {
     level_oomadj[VMPRESS_LEVEL_CRITICAL] =
         GET_LMK_PROPERTY(int32, "critical", 0);
     debug_process_killing = GET_LMK_PROPERTY(bool, "debug", false);
-    is_userdebug_or_eng_build = property_get_bool("ro.debuggable", false);
 
     /* By default disable upgrade/downgrade logic */
     enable_pressure_upgrade =
@@ -4693,9 +4689,6 @@ static void update_props() {
         thrashing_limit_pct * 2));
     swap_util_max = clamp(0, 100, GET_LMK_PROPERTY(int32, "swap_util_max", 100));
     filecache_min_kb = GET_LMK_PROPERTY(int64, "filecache_min_kb", 0);
-
-    // Update Perf Properties
-    update_perf_props();
 }
 
 int main(int argc, char **argv) {
